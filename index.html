@@ -10,16 +10,10 @@
   
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
-  
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -48,9 +42,10 @@
         </ul>
         
         <div class="nav-buttons">
-          <button class="btn btn-outline" onclick="location.href='http://localhost/login_register/register.html'">Sign Up</button>
-          <button class="btn btn-primary" onclick="location.href='http://localhost/login_register/index.html'">Log In</button>
-        </div>
+          <a class="btn btn-outline" href="signin.html">Sign Up</a>
+          <a class="btn btn-primary" href="login.html">Log In</a>
+      </div>
+      
       </div>
     </nav>
   </header>
@@ -79,9 +74,12 @@
           </div>
           
           <div class="hero-cta">
-            <button class="btn btn-large btn-primary" onclick="location.href='http://localhost/login_register/register.html'">
-              Get Started for Free <i class="fas fa-arrow-right"></i>
-            </button>
+            <button class="btn btn-large btn-primary" onclick="location.href='sign.html'">
+              <a href="signin.html" style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
+                  Get Started for Free <i class="fas fa-arrow-right"></i>
+              </a>
+          </button>
+          
             <button class="btn btn-large btn-outline watch-demo">
               <i class="fas fa-play-circle"></i> Watch Demo
             </button>
@@ -150,6 +148,111 @@
     </div>
   </section>
 
+  <!-- Add Chart Section -->
+  <section class="chart-overview">
+    <div class="container">
+        <div class="section-header">
+            <h2>Live Market Overview</h2>
+            <p>Practice with real-time market data</p>
+        </div>
+        
+        <div class="chart-container">
+            <!-- Add button to show chart -->
+            <div class="chart-button-container">
+                <button id="showChartBtn" class="btn btn-primary">
+                    <i class="fas fa-chart-line"></i> Show Live Chart
+                </button>
+            </div>
+
+            <div id="chartWrapper" class="chart-wrapper" style="display: none;">
+                <!-- Add close button -->
+                <button id="closeChartBtn" class="close-chart-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <!-- TradingView Widget BEGIN -->
+                <div class="tradingview-widget-container">
+                    <div id="tradingview_chart"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+                    <script type="text/javascript">
+                    function initChart() {
+                        new TradingView.widget({
+                            "width": "100%",
+                            "height": 500,
+                            "symbol": "NASDAQ:AAPL",
+                            "interval": "D",
+                            "timezone": "Asia/Kolkata",
+                            "theme": "light",
+                            "style": "1",
+                            "locale": "en",
+                            "toolbar_bg": "#f1f3f6",
+                            "enable_publishing": false,
+                            "allow_symbol_change": true,
+                            "container_id": "tradingview_chart",
+                            "studies": [
+                                "MASimple@tv-basicstudies",
+                                "RSI@tv-basicstudies"
+                            ],
+                            "show_popup_button": true,
+                            "popup_width": "1000",
+                            "popup_height": "650",
+                            "watchlist": [
+                                // US Tech Giants
+                                "NASDAQ:AAPL",
+                                "NASDAQ:MSFT",
+                                "NASDAQ:GOOGL",
+                                "NASDAQ:AMZN",
+                                "NASDAQ:META",
+                                "NASDAQ:NVDA",
+                                "NYSE:TSLA",
+                                // US Financial
+                                "NYSE:JPM",
+                                "NYSE:BAC",
+                                "NYSE:GS",
+                                // US Healthcare
+                                "NYSE:JNJ",
+                                "NYSE:PFE",
+                                // US Retail
+                                "NYSE:WMT",
+                                "NYSE:HD",
+                                // Indian Stocks
+                                "NSE:NIFTY",
+                                "BSE:SENSEX",
+                                "NSE:RELIANCE",
+                                "NSE:TCS"
+                            ]
+                        });
+                    }
+                    </script>
+                </div>
+                <!-- TradingView Widget END -->
+
+                <!-- Quick symbols -->
+                <div class="quick-symbols">
+                    <!-- US Tech -->
+                    <button class="symbol-btn active" data-symbol="NASDAQ:AAPL">APPLE</button>
+                    <button class="symbol-btn" data-symbol="NASDAQ:MSFT">MICROSOFT</button>
+                    <button class="symbol-btn" data-symbol="NASDAQ:GOOGL">GOOGLE</button>
+                    <button class="symbol-btn" data-symbol="NASDAQ:AMZN">AMAZON</button>
+                    <button class="symbol-btn" data-symbol="NASDAQ:META">META</button>
+                    <button class="symbol-btn" data-symbol="NASDAQ:NVDA">NVIDIA</button>
+                    <button class="symbol-btn" data-symbol="NYSE:TSLA">TESLA</button>
+                    
+                    <!-- US Market Indices -->
+                    <button class="symbol-btn" data-symbol="FOREXCOM:SPXUSD">S&P 500</button>
+                    <button class="symbol-btn" data-symbol="NASDAQ:NDX">NASDAQ 100</button>
+                    <button class="symbol-btn" data-symbol="DJ:DJI">DOW JONES</button>
+                    
+                    <!-- Indian Market -->
+                    <button class="symbol-btn" data-symbol="NSE:NIFTY">NIFTY 50</button>
+                    <button class="symbol-btn" data-symbol="BSE:SENSEX">SENSEX</button>
+                    <button class="symbol-btn" data-symbol="NSE:BANKNIFTY">BANK NIFTY</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
   <!-- Market Section -->
   <section class="market-section">
     <div class="container">
@@ -206,52 +309,49 @@
   </section>
   
   <!-- Testimonials Section -->
-  <section class="testimonials-section">
+  <section class="testimonials">
     <div class="container">
-      <div class="section-header">
-        <h2>What Our Users Say</h2>
-        <p>Join thousands of satisfied traders who have improved their trading skills with ProTrade</p>
-      </div>
-      
-      <div class="testimonials-slider">
-        <div class="testimonial-card">
-          <div class="testimonial-rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-          </div>
-          <p class="testimonial-text">"ProTrade helped me understand market dynamics without risking my savings. The platform is intuitive and the educational resources are excellent."</p>
-          <div class="testimonial-author">
-            <img src="/api/placeholder/50/50" alt="User Avatar">
-            <div>
-              <h4>Mahesh Patil</h4>
-              <p>IT Student</p>
-            </div>
-          </div>
+        <div class="section-header">
+            <h2>What People Say About Us</h2>
+            <p>Trusted by thousands of traders worldwide</p>
         </div>
-        
-        <div class="testimonial-card">
-          <div class="testimonial-rating">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-          </div>
-          <p class="testimonial-text">"The real-time data and analytics tools are impressive. I've been using ProTrade for 6 months and my trading confidence has significantly improved."</p>
-          <div class="testimonial-author">
-            <img src="/api/placeholder/50/50" alt="User Avatar">
-            <div>
-              <h4>Abhishek Rajbhar</h4>
-              <p>IT Student</p>
+
+        <div class="testimonials-grid">
+            <!-- Keep existing first two review cards -->
+            <div class="testimonial-card">
+                <div class="testimonial-rating">★★★★★</div>
+                <p class="testimonial-text">"ProTrade has completely transformed my trading journey. The real-time analytics and user-friendly interface make trading decisions much easier."</p>
+                <div class="testimonial-author">
+                    <div class="author-info">
+                        <h4>Abhishek Rajbhar</h4>
+                        <span>IT Student</span>
+                    </div>
+                </div>
             </div>
-          </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-rating">★★★★★</div>
+                <p class="testimonial-text">"The educational resources and community support here are outstanding. I've learned more in 3 months than I did in a year of self-study."</p>
+                <div class="testimonial-author">
+                    <div class="author-info">
+                        <h4>Mahesh Patil</h4>
+                        <span>Day Trader</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Container for new dynamic reviews -->
+            <div id="dynamicReviews"></div>
         </div>
-      </div>
+
+        <!-- Show More Button -->
+        <div class="show-more-container">
+            <button id="showMoreReviews" class="btn btn-outline">
+                Show More Reviews <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
     </div>
-  </section>
+</section>
 
   <!-- Team Section -->
   <section class="team-section">
@@ -303,9 +403,12 @@
       <div class="cta-content">
         <h2>Ready to Start Your Trading Journey?</h2>
         <p>Join ProTrade today and get access to powerful tools, real-time data, and a risk-free environment to master your trading skills.</p>
-        <button class="btn btn-large btn-primary" onclick="location.href='http://localhost/login_register/register.html'">
-          Create Free Account <i class="fas fa-arrow-right"></i>
-        </button>
+        <button class="btn btn-large btn-primary" onclick="location.href='sign.html'">
+          <a href="signin.html" style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
+            Create Free Account
+          </a>
+      </button>
+      
       </div>
     </div>
   </section>
@@ -329,7 +432,7 @@
           <div class="footer-links">
             <h4>Company</h4>
             <ul>
-              <li><a href="about.html">About Us</a></li>
+              <li><a href="learn.html">About Us</a></li>
               <li><a href="careers.html">Careers</a></li>
               <li><a href="blog.html">Blog</a></li>
               <li><a href="press.html">Press</a></li>
@@ -482,7 +585,105 @@
           }
         });
       }, 5000);
+
+      const showChartBtn = document.getElementById('showChartBtn');
+      const closeChartBtn = document.getElementById('closeChartBtn');
+      const chartWrapper = document.getElementById('chartWrapper');
+      let chartInitialized = false;
+
+      showChartBtn.addEventListener('click', function() {
+        chartWrapper.style.display = 'block';
+        chartWrapper.classList.add('active');
+        
+        // Initialize chart if not already done
+        if (!chartInitialized) {
+          initChart();
+          chartInitialized = true;
+        }
+        
+        // Change button text
+        showChartBtn.innerHTML = '<i class="fas fa-check"></i> Chart Loaded';
+        showChartBtn.classList.add('hidden');
+        
+        // Scroll to chart
+        chartWrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      closeChartBtn.addEventListener('click', function() {
+        chartWrapper.classList.remove('active');
+        setTimeout(() => {
+          chartWrapper.style.display = 'none';
+          // Reset and show the original button
+          showChartBtn.innerHTML = '<i class="fas fa-chart-line"></i> Show Live Chart';
+          showChartBtn.classList.remove('hidden');
+          showChartBtn.disabled = false;
+          showChartBtn.style.backgroundColor = '';
+        }, 500); // Match the transition duration
+
+        // Scroll back to the button
+        showChartBtn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+
+      // Add symbol switching functionality
+      const symbolButtons = document.querySelectorAll('.symbol-btn');
+      
+      symbolButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const symbol = this.dataset.symbol;
+          
+          // Update active state
+          symbolButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Update chart
+          if (window.tvWidget) {
+            window.tvWidget.setSymbol(symbol, 'D');
+          }
+        });
+      });
     });
+  </script>
+
+  <!-- Add this JavaScript before closing body tag -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const reviews = JSON.parse(localStorage.getItem('userReviews')) || [];
+      const dynamicReviews = document.getElementById('dynamicReviews');
+      const showMoreBtn = document.getElementById('showMoreReviews');
+      let isExpanded = false;
+
+      function createReviewCard(review) {
+          return `
+              <div class="testimonial-card">
+                  <div class="testimonial-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5-review.rating)}</div>
+                  <p class="testimonial-text">"${review.review}"</p>
+                  <div class="testimonial-author">
+                      <div class="author-info">
+                          <h4>${review.name}</h4>
+                          <span>${review.experience}</span>
+                      </div>
+                  </div>
+              </div>
+          `;
+      }
+
+      function toggleReviews() {
+          isExpanded = !isExpanded;
+          
+          if (isExpanded) {
+              dynamicReviews.innerHTML = reviews.map(createReviewCard).join('');
+              showMoreBtn.innerHTML = 'Show Less <i class="fas fa-chevron-up"></i>';
+          } else {
+              dynamicReviews.innerHTML = '';
+              showMoreBtn.innerHTML = 'Show More Reviews <i class="fas fa-chevron-down"></i>';
+          }
+      }
+
+      // Show/hide "Show More" button based on if there are any reviews
+      showMoreBtn.style.display = reviews.length > 0 ? 'block' : 'none';
+      
+      showMoreBtn.addEventListener('click', toggleReviews);
+  });
   </script>
 </body>
 </html>
