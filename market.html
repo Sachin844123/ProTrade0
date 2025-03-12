@@ -21,48 +21,54 @@
 
     <script type="text/babel">
         function StockMarket() {
-    const [stocks, setStocks] = React.useState([
-        { name: "TCS", price: 3500, prevPrice: 3500 },
-        { name: "Reliance", price: 2700, prevPrice: 2700 },
-        { name: "Infosys", price: 1600, prevPrice: 1600 },
-        { name: "HDFC Bank", price: 1500, prevPrice: 1500 },
-        { name: "ICICI Bank", price: 930, prevPrice: 930 },
-        { name: "Tata Motors", price: 670, prevPrice: 670 },
-        { name: "SBI", price: 600, prevPrice: 600 },
-        { name: "HUL", price: 2500, prevPrice: 2500 },
-        { name: "Bharti Airtel", price: 1150, prevPrice: 1150 },
-        { name: "Asian Paints", price: 2800, prevPrice: 2800 },
-        { name: "ITC", price: 420, prevPrice: 420 },
-        { name: "L&T", price: 3200, prevPrice: 3200 },
-        { name: "Axis Bank", price: 1020, prevPrice: 1020 },
-        { name: "Maruti Suzuki", price: 10500, prevPrice: 10500 },
-        { name: "Wipro", price: 450, prevPrice: 450 },
-        { name: "Sun Pharma", price: 1400, prevPrice: 1400 },
-        { name: "Bajaj Finance", price: 6800, prevPrice: 6800 },
-        { name: "NTPC", price: 280, prevPrice: 280 },
-        { name: "Power Grid", price: 240, prevPrice: 240 },
-        { name: "Tech Mahindra", price: 1250, prevPrice: 1250 },
-        { name: "Hero MotoCorp", price: 3100, prevPrice: 3100 },
-        { name: "Titan", price: 3400, prevPrice: 3400 },
-        { name: "Nestle India", price: 24500, prevPrice: 24500 },
-        { name: "Coal India", price: 320, prevPrice: 320 },
-        { name: "UltraTech Cement", price: 8900, prevPrice: 8900 },
-        { name: "Dr Reddy's", price: 5600, prevPrice: 5600 },
-        { name: "Adani Ports", price: 850, prevPrice: 850 },
-        { name: "Grasim", price: 2100, prevPrice: 2100 },
-        { name: "JSW Steel", price: 840, prevPrice: 840 },
-        { name: "Tata Steel", price: 130, prevPrice: 130 },
-        { name: "M&M", price: 1650, prevPrice: 1650 },
-        { name: "Bajaj Auto", price: 7200, prevPrice: 7200 },
-        { name: "Cipla", price: 1180, prevPrice: 1180 },
-        { name: "BPCL", price: 460, prevPrice: 460 },
-        { name: "IndusInd Bank", price: 1480, prevPrice: 1480 },
-        { name: "Britannia", price: 4600, prevPrice: 4600 },
-        { name: "ONGC", price: 210, prevPrice: 210 },
-        { name: "Eicher Motors", price: 3850, prevPrice: 3850 },
-        { name: "Tata Consumer", price: 960, prevPrice: 960 },
-        { name: "Hindalco", price: 520, prevPrice: 520 }
-    ]);
+            const initialStocks = [
+                { name: "TCS", price: 3500, prevPrice: 3500 },
+                { name: "Reliance", price: 2700, prevPrice: 2700 },
+                { name: "Infosys", price: 1600, prevPrice: 1600 },
+                { name: "HDFC Bank", price: 1500, prevPrice: 1500 },
+                { name: "ICICI Bank", price: 930, prevPrice: 930 },
+                { name: "Tata Motors", price: 670, prevPrice: 670 },
+                { name: "SBI", price: 600, prevPrice: 600 },
+                { name: "HUL", price: 2500, prevPrice: 2500 },
+                { name: "Bharti Airtel", price: 1150, prevPrice: 1150 },
+                { name: "Asian Paints", price: 2800, prevPrice: 2800 },
+                { name: "ITC", price: 420, prevPrice: 420 },
+                { name: "L&T", price: 3200, prevPrice: 3200 },
+                { name: "Axis Bank", price: 1020, prevPrice: 1020 },
+                { name: "Maruti Suzuki", price: 10500, prevPrice: 10500 },
+                { name: "Wipro", price: 450, prevPrice: 450 },
+                { name: "Sun Pharma", price: 1400, prevPrice: 1400 },
+                { name: "Bajaj Finance", price: 6800, prevPrice: 6800 },
+                { name: "NTPC", price: 280, prevPrice: 280 },
+                { name: "Power Grid", price: 240, prevPrice: 240 },
+                { name: "Tech Mahindra", price: 1250, prevPrice: 1250 },
+                { name: "Hero MotoCorp", price: 3100, prevPrice: 3100 },
+                { name: "Titan", price: 3400, prevPrice: 3400 },
+                { name: "Nestle India", price: 24500, prevPrice: 24500 },
+                { name: "Coal India", price: 320, prevPrice: 320 },
+                { name: "UltraTech Cement", price: 8900, prevPrice: 8900 },
+                { name: "Dr Reddy's", price: 5600, prevPrice: 5600 },
+                { name: "Adani Ports", price: 850, prevPrice: 850 },
+                { name: "Grasim", price: 2100, prevPrice: 2100 },
+                { name: "JSW Steel", price: 840, prevPrice: 840 },
+                { name: "Tata Steel", price: 130, prevPrice: 130 },
+                { name: "M&M", price: 1650, prevPrice: 1650 },
+                { name: "Bajaj Auto", price: 7200, prevPrice: 7200 },
+                { name: "Cipla", price: 1180, prevPrice: 1180 },
+                { name: "BPCL", price: 460, prevPrice: 460 },
+                { name: "IndusInd Bank", price: 1480, prevPrice: 1480 },
+                { name: "Britannia", price: 4600, prevPrice: 4600 },
+                { name: "ONGC", price: 210, prevPrice: 210 },
+                { name: "Eicher Motors", price: 3850, prevPrice: 3850 },
+                { name: "Tata Consumer", price: 960, prevPrice: 960 },
+                { name: "Hindalco", price: 520, prevPrice: 520 }
+            ];
+
+            // Initialize stocks from localStorage or use initial values
+            const [stocks, setStocks] = React.useState(() => {
+                const savedStocks = localStorage.getItem('stocks');
+                return savedStocks ? JSON.parse(savedStocks) : initialStocks;
+            });
 
             const [searchTerm, setSearchTerm] = React.useState('');
             const [wallet, setWallet] = React.useState(() => Number(localStorage.getItem('wallet')) || 100000);
@@ -80,7 +86,8 @@
                 localStorage.setItem('wallet', wallet);
                 localStorage.setItem('portfolio', JSON.stringify(portfolio));
                 localStorage.setItem('watchlist', JSON.stringify(watchlist));
-            }, [wallet, portfolio, watchlist]);
+                localStorage.setItem('stocks', JSON.stringify(stocks)); // Save stocks to localStorage
+            }, [wallet, portfolio, watchlist, stocks]);
 
             const updatePrices = () => {
                 setStocks(prevStocks => 
@@ -151,6 +158,12 @@
                 );
             };
 
+            const resetMarket = () => {
+                if (confirm("Are you sure you want to reset the market? This will reset all prices to their initial values.")) {
+                    setStocks(initialStocks);
+                }
+            };
+
             const filteredStocks = stocks.filter(stock => 
                 stock.name.toLowerCase().includes(searchTerm.toLowerCase())
             );
@@ -164,13 +177,21 @@
                         <p className="text-3xl font-semibold">₹{wallet.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                     </div>
 
-                    <input 
-                        type="text"
-                        placeholder="Search stocks..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="w-full px-6 py-4 text-lg border-2 border-slate-200 rounded-xl mb-8 focus:outline-none focus:border-indigo-500 transition-colors shadow-sm"
-                    />
+                    <div className="flex justify-between items-center mb-8">
+                        <input 
+                            type="text"
+                            placeholder="Search stocks..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="flex-1 px-6 py-4 text-lg border-2 border-slate-200 rounded-xl focus:outline-none focus:border-indigo-500 transition-colors shadow-sm"
+                        />
+                        <button
+                            onClick={resetMarket}
+                            className="ml-4 px-6 py-4 bg-slate-200 text-slate-700 font-medium rounded-xl hover:bg-slate-300 transition-colors"
+                        >
+                            Reset Market
+                        </button>
+                    </div>
 
                     <div className="space-y-4">
                         {filteredStocks.map(stock => (
