@@ -384,6 +384,11 @@
     if (!localStorage.getItem("tradeHistory")) {
         localStorage.setItem("tradeHistory", JSON.stringify([]));
     }
+    // NEW: Add storage for market data
+    if (!localStorage.getItem("marketStocks")) {
+        const initialMarketStocks = getInitialMarketStocks();
+        localStorage.setItem("marketStocks", JSON.stringify(initialMarketStocks));
+    }
 
     // State management
     let state = {
@@ -393,53 +398,58 @@
         viewMode: localStorage.getItem("viewMode") || "grid"
     };
 
+    // FIXED: Get market stocks from local storage
+    let marketStocks = JSON.parse(localStorage.getItem("marketStocks")) || getInitialMarketStocks();
+
     // Market data with volatility factors
-    const marketStocks = [
-        { name: "TCS", price: 3500, volatility: 0.8 },
-        { name: "Reliance", price: 2700, volatility: 1.2 },
-        { name: "Infosys", price: 1600, volatility: 0.9 },
-        { name: "HDFC Bank", price: 1500, volatility: 0.7 },
-        { name: "ICICI Bank", price: 930, volatility: 1.1 },
-        { name: "Tata Motors", price: 670, volatility: 1.5 },
-        { name: "SBI", price: 600, volatility: 1.3 },
-        { name: "HUL", price: 2500, volatility: 0.6 },
-        { name: "Bajaj Finance", price: 7200, volatility: 1.4 },
-        { name: "Adani Green", price: 1300, volatility: 2.0 },
-        { name: "ITC", price: 400, volatility: 0.5 },
-        { name: "L&T", price: 2100, volatility: 1.0 },
-        { name: "Wipro", price: 450, volatility: 0.9 },
-        { name: "Kotak Bank", price: 1800, volatility: 0.8 },
-        { name: "Asian Paints", price: 3100, volatility: 0.7 },
-        { name: "Bharti Airtel", price: 1150, volatility: 1.1 },
-        { name: "Sun Pharma", price: 1400, volatility: 0.8 },
-        { name: "NTPC", price: 280, volatility: 0.5 },
-        { name: "Power Grid", price: 240, volatility: 0.4 },
-        { name: "Tech Mahindra", price: 1250, volatility: 1.2 },
-        { name: "Hero MotoCorp", price: 3100, volatility: 1.3 },
-        { name: "Titan", price: 3400, volatility: 1.1 },
-        { name: "Nestle India", price: 24500, volatility: 0.6 },
-        { name: "Coal India", price: 320, volatility: 0.9 },
-        { name: "UltraTech Cement", price: 8900, volatility: 1.0 },
-        { name: "Dr Reddy's", price: 5600, volatility: 0.8 },
-        { name: "Adani Ports", price: 850, volatility: 1.8 },
-        { name: "Grasim", price: 2100, volatility: 1.2 },
-        { name: "JSW Steel", price: 840, volatility: 1.4 },
-        { name: "Tata Steel", price: 130, volatility: 1.5 },
-        { name: "M&M", price: 1650, volatility: 1.2 },
-        { name: "Bajaj Auto", price: 7200, volatility: 1.1 },
-        { name: "Cipla", price: 1180, volatility: 0.7 },
-        { name: "BPCL", price: 460, volatility: 1.3 },
-        { name: "IndusInd Bank", price: 1480, volatility: 1.4 },
-        { name: "Britannia", price: 4600, volatility: 0.6 },
-        { name: "ONGC", price: 210, volatility: 1.2 },
-        { name: "Eicher Motors", price: 3850, volatility: 1.3 },
-        { name: "Tata Consumer", price: 960, volatility: 0.8 },
-        { name: "Hindalco", price: 520, volatility: 1.6 }
-    ].map(stock => ({...stock, initialPrice: stock.price}));
+    function getInitialMarketStocks() {
+        return [
+            { name: "TCS", price: 3500, volatility: 0.8, initialPrice: 3500, change: 0 },
+            { name: "Reliance", price: 2700, volatility: 1.2, initialPrice: 2700, change: 0 },
+            { name: "Infosys", price: 1600, volatility: 0.9, initialPrice: 1600, change: 0 },
+            { name: "HDFC Bank", price: 1500, volatility: 0.7, initialPrice: 1500, change: 0 },
+            { name: "ICICI Bank", price: 930, volatility: 1.1, initialPrice: 930, change: 0 },
+            { name: "Tata Motors", price: 670, volatility: 1.5, initialPrice: 670, change: 0 },
+            { name: "SBI", price: 600, volatility: 1.3, initialPrice: 600, change: 0 },
+            { name: "HUL", price: 2500, volatility: 0.6, initialPrice: 2500, change: 0 },
+            { name: "Bajaj Finance", price: 7200, volatility: 1.4, initialPrice: 7200, change: 0 },
+            { name: "Adani Green", price: 1300, volatility: 2.0, initialPrice: 1300, change: 0 },
+            { name: "ITC", price: 400, volatility: 0.5, initialPrice: 400, change: 0 },
+            { name: "L&T", price: 2100, volatility: 1.0, initialPrice: 2100, change: 0 },
+            { name: "Wipro", price: 450, volatility: 0.9, initialPrice: 450, change: 0 },
+            { name: "Kotak Bank", price: 1800, volatility: 0.8, initialPrice: 1800, change: 0 },
+            { name: "Asian Paints", price: 3100, volatility: 0.7, initialPrice: 3100, change: 0 },
+            { name: "Bharti Airtel", price: 1150, volatility: 1.1, initialPrice: 1150, change: 0 },
+            { name: "Sun Pharma", price: 1400, volatility: 0.8, initialPrice: 1400, change: 0 },
+            { name: "NTPC", price: 280, volatility: 0.5, initialPrice: 280, change: 0 },
+            { name: "Power Grid", price: 240, volatility: 0.4, initialPrice: 240, change: 0 },
+            { name: "Tech Mahindra", price: 1250, volatility: 1.2, initialPrice: 1250, change: 0 },
+            { name: "Hero MotoCorp", price: 3100, volatility: 1.3, initialPrice: 3100, change: 0 },
+            { name: "Titan", price: 3400, volatility: 1.1, initialPrice: 3400, change: 0 },
+            { name: "Nestle India", price: 24500, volatility: 0.6, initialPrice: 24500, change: 0 },
+            { name: "Coal India", price: 320, volatility: 0.9, initialPrice: 320, change: 0 },
+            { name: "UltraTech Cement", price: 8900, volatility: 1.0, initialPrice: 8900, change: 0 },
+            { name: "Dr Reddy's", price: 5600, volatility: 0.8, initialPrice: 5600, change: 0 },
+            { name: "Adani Ports", price: 850, volatility: 1.8, initialPrice: 850, change: 0 },
+            { name: "Grasim", price: 2100, volatility: 1.2, initialPrice: 2100, change: 0 },
+            { name: "JSW Steel", price: 840, volatility: 1.4, initialPrice: 840, change: 0 },
+            { name: "Tata Steel", price: 130, volatility: 1.5, initialPrice: 130, change: 0 },
+            { name: "M&M", price: 1650, volatility: 1.2, initialPrice: 1650, change: 0 },
+            { name: "Bajaj Auto", price: 7200, volatility: 1.1, initialPrice: 7200, change: 0 },
+            { name: "Cipla", price: 1180, volatility: 0.7, initialPrice: 1180, change: 0 },
+            { name: "BPCL", price: 460, volatility: 1.3, initialPrice: 460, change: 0 },
+            { name: "IndusInd Bank", price: 1480, volatility: 1.4, initialPrice: 1480, change: 0 },
+            { name: "Britannia", price: 4600, volatility: 0.6, initialPrice: 4600, change: 0 },
+            { name: "ONGC", price: 210, volatility: 1.2, initialPrice: 210, change: 0 },
+            { name: "Eicher Motors", price: 3850, volatility: 1.3, initialPrice: 3850, change: 0 },
+            { name: "Tata Consumer", price: 960, volatility: 0.8, initialPrice: 960, change: 0 },
+            { name: "Hindalco", price: 520, volatility: 1.6, initialPrice: 520, change: 0 }
+        ];
+    }
 
     // Utility functions
     const formatCurrency = (amount) => {
-        // FIX: Ensure amount is a valid number
+        // Ensure amount is a valid number
         if (isNaN(amount)) amount = 0;
         
         return new Intl.NumberFormat('en-IN', {
@@ -450,7 +460,7 @@
     };
 
     const formatPercentage = (value) => {
-        // FIX: Ensure value is a valid number
+        // Ensure value is a valid number
         if (isNaN(value)) value = 0;
         
         return new Intl.NumberFormat('en-IN', {
@@ -462,8 +472,10 @@
 
     // Update stock prices with realistic market simulation
     function updateLiveStockPrices() {
+        let hasChanges = false;
+        
         marketStocks.forEach(stock => {
-            // FIX: Ensure initialPrice is always defined
+            // Ensure initialPrice is always defined
             if (!stock.initialPrice || stock.initialPrice === 0) {
                 stock.initialPrice = stock.price;
             }
@@ -482,14 +494,24 @@
             const newPrice = stock.price * (1 + change / 100);
             const maxChange = stock.initialPrice * 0.2; // 20% max change from initial
             
+            const oldPrice = stock.price;
             stock.price = Math.max(
                 stock.initialPrice - maxChange,
                 Math.min(stock.initialPrice + maxChange, newPrice)
             );
             
-            // FIX: Calculate change safely
-            stock.change = stock.initialPrice ? ((stock.price - stock.initialPrice) / stock.initialPrice) * 100 : 0;
+            // Calculate change safely
+            stock.change = ((stock.price - stock.initialPrice) / stock.initialPrice) * 100;
+            
+            if (oldPrice !== stock.price) {
+                hasChanges = true;
+            }
         });
+        
+        // FIXED: Save market data to localStorage when changes occur
+        if (hasChanges) {
+            localStorage.setItem("marketStocks", JSON.stringify(marketStocks));
+        }
 
         updatePortfolioView();
     }
@@ -499,14 +521,16 @@
         const portfolioContainer = document.getElementById("portfolioContainer");
         if (!portfolioContainer) return;
         
-        // FIX: Set class based on current view mode
+        // Set class based on current view mode
         portfolioContainer.className = state.viewMode === "grid" ? "portfolio-grid" : "portfolio-list";
         
         portfolioContainer.innerHTML = "";
 
+        // FIXED: Initialize summary values
         let totalInvestment = 0;
         let currentValue = 0;
 
+        // Process each stock in portfolio
         state.portfolio.forEach((stock, index) => {
             try {
                 const marketStock = marketStocks.find(s => s.name === stock.name);
@@ -517,9 +541,10 @@
                 const investment = stock.buyPrice * stock.quantity;
                 const profitLoss = value - investment;
                 
-                // FIX: Avoid division by zero
+                // Avoid division by zero
                 const profitLossPercentage = investment > 0 ? (profitLoss / investment) * 100 : 0;
 
+                // FIXED: Add to summary totals
                 totalInvestment += investment;
                 currentValue += value;
 
@@ -540,6 +565,7 @@
             }
         });
 
+        // FIXED: Always call updateSummaryCards even if portfolio is empty
         updateSummaryCards(totalInvestment, currentValue);
     }
 
@@ -549,7 +575,7 @@
         const card = document.createElement("div");
         card.className = "stock-card";
         
-        // FIX: Add safety checks for marketStock.change
+        // Add safety checks for marketStock.change
         const changeValue = marketStock.change || 0;
         
         card.innerHTML = `
@@ -593,14 +619,29 @@
     }
 
     function updateSummaryCards(totalInvestment, currentValue) {
-        const totalReturns = currentValue - totalInvestment;
+        // FIXED: Calculate values here rather than relying on passed arguments
+        let calculatedTotalInvestment = 0;
+        let calculatedCurrentValue = 0;
         
-        // FIX: Avoid division by zero
-        const returnRate = totalInvestment > 0 ? (totalReturns / totalInvestment) * 100 : 0;
+        // Recalculate values to ensure accuracy
+        state.portfolio.forEach(stock => {
+            const marketStock = marketStocks.find(s => s.name === stock.name);
+            if (marketStock) {
+                calculatedTotalInvestment += stock.buyPrice * stock.quantity;
+                calculatedCurrentValue += marketStock.price * stock.quantity;
+            }
+        });
+        
+        // Use calculated values instead of parameters
+        const totalReturns = calculatedCurrentValue - calculatedTotalInvestment;
+        
+        // Avoid division by zero
+        const returnRate = calculatedTotalInvestment > 0 ? (totalReturns / calculatedTotalInvestment) * 100 : 0;
 
+        // Update DOM elements
         document.getElementById("walletBalance").textContent = formatCurrency(state.wallet);
-        document.getElementById("totalInvestment").textContent = formatCurrency(totalInvestment);
-        document.getElementById("currentValue").textContent = formatCurrency(currentValue);
+        document.getElementById("totalInvestment").textContent = formatCurrency(calculatedTotalInvestment);
+        document.getElementById("currentValue").textContent = formatCurrency(calculatedCurrentValue);
         document.getElementById("totalReturns").textContent = formatCurrency(totalReturns);
         document.getElementById("returnRate").textContent = formatPercentage(returnRate);
     }
@@ -678,7 +719,6 @@
         document.getElementById("sellModal").style.display = "none";
     }
 
-    // FIX: Add the missing showStockDetails function
     function showStockDetails(index) {
         const stock = state.portfolio[index];
         const marketStock = marketStocks.find(s => s.name === stock.name);
@@ -731,7 +771,7 @@
             const li = document.createElement("li");
             li.className = "trade-item";
             
-            // FIX: Add try-catch for date parsing
+            // Add try-catch for date parsing
             let dateStr = "Unknown date";
             try {
                 const date = new Date(trade.timestamp);
@@ -742,14 +782,14 @@
             
             li.innerHTML = `
                 <div class="trade-details">
-                    <strong>${trade.type} ${trade.name}</strong>
-                    <div class="trade-timestamp">${dateStr}</div>
+                    <strong>${trade.type}: ${trade.name}</strong>
                     <div>
-                        Quantity: ${trade.quantity} | Price: ${formatCurrency(trade.price)}
-                        <span class="${trade.profitLoss >= 0 ? 'success' : 'danger'}">
-                            P/L: ${formatCurrency(trade.profitLoss)}
-                        </span>
+                        ${trade.quantity} shares at ${formatCurrency(trade.price)} = ${formatCurrency(trade.total)}
                     </div>
+                    <div class="trade-timestamp">${dateStr}</div>
+                </div>
+                <div class="${trade.profitLoss >= 0 ? 'success' : 'danger'}">
+                    ${trade.type === "SELL" ? formatCurrency(trade.profitLoss) : ""}
                 </div>
             `;
             
@@ -758,49 +798,46 @@
     }
 
     function clearTradeHistory() {
-        if (confirm("Are you sure you want to clear trade history?")) {
+        if (confirm("Are you sure you want to clear your trade history?")) {
             state.tradeHistory = [];
             saveState();
             updateTradeHistory();
         }
     }
 
-    // FIX: Add the toggle view function
+    // Toggle view mode
     function toggleView() {
         state.viewMode = state.viewMode === "grid" ? "list" : "grid";
         localStorage.setItem("viewMode", state.viewMode);
-        
-        const container = document.getElementById("portfolioContainer");
-        if (container) {
-            container.className = state.viewMode === "grid" ? "portfolio-grid" : "portfolio-list";
-        }
-        
         updatePortfolioView();
     }
 
-    // State persistence
+    // Save current state to localStorage
     function saveState() {
         localStorage.setItem("wallet", JSON.stringify(state.wallet));
         localStorage.setItem("portfolio", JSON.stringify(state.portfolio));
         localStorage.setItem("tradeHistory", JSON.stringify(state.tradeHistory));
-        localStorage.setItem("viewMode", state.viewMode);
     }
 
-    // Initialize application
-    function initializeApp() {
-        // Apply the current view mode class
-        const container = document.getElementById("portfolioContainer");
-        if (container) {
-            container.className = state.viewMode === "grid" ? "portfolio-grid" : "portfolio-list";
-        }
-        
+    // Initialize the page
+    function initPage() {
         updatePortfolioView();
         updateTradeHistory();
-        setInterval(updateLiveStockPrices, 1000);
+        
+        // Set up price updates
+        setInterval(updateLiveStockPrices, 3000);
+        
+        // Attach event listeners
+        window.onclick = function(event) {
+            const modal = document.getElementById("sellModal");
+            if (event.target === modal) {
+                closeSellModal();
+            }
+        };
     }
 
-    // Start the application
-    document.addEventListener('DOMContentLoaded', initializeApp);
+    // Run initialization
+    document.addEventListener("DOMContentLoaded", initPage);
     </script>
 </body>
 </html>
