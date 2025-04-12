@@ -471,8 +471,18 @@
     };
 
     // Update stock prices with realistic market simulation
+    // In ww.html, update the market data synchronization
     function updateLiveStockPrices() {
         let hasChanges = false;
+        
+        // Get latest market data if available from market.js
+        const marketData = JSON.parse(localStorage.getItem("marketData"));
+        if (marketData && marketData.lastUpdate && 
+            (Date.now() - marketData.lastUpdate) < 5000) { // Within 5 seconds
+            marketStocks = marketData.stocks;
+            updatePortfolioView();
+            return;
+        }
         
         marketStocks.forEach(stock => {
             // Ensure initialPrice is always defined
@@ -484,12 +494,12 @@
             const hour = new Date().getHours();
             const isMarketHours = hour >= 9 && hour < 16;
             const timeVolatility = isMarketHours ? 1 : 0.3;
-
+    
             // Calculate price change with multiple factors
             const baseChange = (Math.random() * 2 - 1);
             const volatilityFactor = stock.volatility * timeVolatility;
             const change = baseChange * volatilityFactor;
-
+    
             // Update price with limits
             const newPrice = stock.price * (1 + change / 100);
             const maxChange = stock.initialPrice * 0.2; // 20% max change from initial
@@ -511,8 +521,12 @@
         // FIXED: Save market data to localStorage when changes occur
         if (hasChanges) {
             localStorage.setItem("marketStocks", JSON.stringify(marketStocks));
+            localStorage.setItem("marketData", JSON.stringify({
+                stocks: marketStocks,
+                lastUpdate: Date.now()
+            }));
         }
-
+    
         updatePortfolioView();
     }
 
